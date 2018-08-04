@@ -7,7 +7,7 @@ Convert the content of files using a specified function.
 
 ### Parameters
 
-* `engine` **{Function}**: function that processes the content. The parameters are the file content and metadata. The metadata is the globally set metadata overridden with file's frontmatter. Frontmatter is only used if the [frontmatter module](https://github.com/hoast/hoast-frontmatter#readme) is used. This can be an asynchronous.
+* `engine` **{Function}**: function that processes the data and returns the new content. The parameters are the file path, file content, file frontmatter, and global metadata. The frontmatter is only used if the [frontmatter module](https://github.com/hoast/hoast-frontmatter#readme) is used. Do note this function can be an asynchronous.
 	* Required: `yes`
 * `extension` **{String}**: The new extension name if it needs to change.
 	* Required: `no`
@@ -33,9 +33,9 @@ const cleanCSS = new CleanCSS();
 Hoast(__dirname)
   .use(read())
   .use(convert({
-    engine: function(content, metadata) {
+    engine: function(path, content, frontmatter, metadata) {
       return cleanCSS.minify(content);
-	},
+    },
     extension: 'min.css',
     patterns: [
       '**/*.css'

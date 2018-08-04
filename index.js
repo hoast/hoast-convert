@@ -44,16 +44,16 @@ module.exports = function(options) {
 					debug(`Processing file '${file.path}'.`);
 					
 					assert(file.content !== null, 'hoast-convert: No content found on file, read module needs to be called before this.');
-					// Has to be a string and match patterns.
+					// Has to match patterns.
 					if (file.content.type !== 'string' || (options.patterns && options.patterns.length > 0 && !nanomatch.any(file.path, options.patterns))) {
 						debug(`File not valid for processing.`);
 						return resolve();
 					}
-					debug(`File content is valid.`);
+					debug(`File data is valid.`);
 					
 					// Overwrite content with converted content.
-					file.content = await options.engine(file.content.data, { global: hoast.options.metadata, file: file.frontmatter });
-					debug(`File content converted.`);
+					file.content.data = await options.engine(file.path, file.content.data, file.frontmatter, hoast.options.metadata);
+					debug(`File data converted.`);
 					
 					// Replace file extension.
 					if (options.extension) {
