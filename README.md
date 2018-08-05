@@ -6,10 +6,10 @@ Convert the content of files using a specified function.
 
 ## Usage
 
-Install using [npm](https://npmjs.com).
+Install [hoast-convert](https://npmjs.com/package/hoast-convert) using [npm](https://npmjs.com).
 
 ```
-[$ npm install hoast-convert](https://www.npmjs.com/package/hoast-convert)
+$ npm install hoast-convert
 ```
 
 ### Parameters
@@ -54,4 +54,5 @@ Hoast(__dirname)
 > In the example the CSS files are minified using [CleanCSS](https://github.com/jakubpawlowicz/clean-css#readme) and the `min` is prepended to the extension.
 
 ## License
+
 [ISC license](https://github.com/hoast/hoast-convert/blob/master/LICENSE)
