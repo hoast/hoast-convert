@@ -1,7 +1,7 @@
 {
   "author": "Ron Dekker",
   "name": "hoast-convert",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Hoast module used to convert the content of files using a specified function.",
   "license": "ISC",
   "keywords": [

@@ -11,7 +11,7 @@ const nanomatch = require('nanomatch');
  */
 const validateOptions = function(options) {
 	assert(typeof(options) === 'object', 'hoast-convert: options must be of type object.');
-	assert(typeof(options.engine) === 'funtion', 'hoast-convert: engine must be specified and of type function.');
+	assert(typeof(options.engine) === 'function', 'hoast-convert: engine must be specified and of type function.');
 	if (options.extension) {
 		assert(typeof(options.extension) === 'string', 'hoast-convert: extension must be of type string.');
 	}
@@ -52,15 +52,27 @@ module.exports = function(options) {
 					debug(`File data is valid.`);
 					
 					// Overwrite content with converted content.
-					file.content.data = await options.engine(file.path, file.content.data, file.frontmatter, hoast.options.metadata);
-					debug(`File data converted.`);
-					
-					// Replace file extension.
-					if (options.extension) {
-						file.path = file.path.substr(0, file.path.lastIndexOf('.')).concat(options.extension);
-						debug(`Replacing file extension to '${file.path}'.`);
-					}
-					resolve();
+					options.engine(file.path, file.content.data, file.frontmatter, hoast.options.metadata)
+						.then(function(result) {
+							if (typeof(result) === 'string') {
+								file.content.data = result;
+							} else if (typeof(result) === 'object') {
+								if (result.path !== undefined) {
+									file.path = result.path;
+								}
+								if (file.content.data !== undefined) {
+									file.content.data = result.content;
+								}
+							}
+							debug(`File data converted.`);
+							
+							// Replace file extension.
+							if (options.extension) {
+								file.path = file.path.substr(0, file.path.lastIndexOf('.')).concat(options.extension);
+								debug(`Replacing file extension to '${file.path}'.`);
+							}
+							resolve();
+						});
 				})
 			})
 		);

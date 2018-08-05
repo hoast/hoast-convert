@@ -1,13 +1,20 @@
 # Hoast-convert
 Convert the content of files using a specified function.
 
-> As the name suggest this is a [Hoast](https://github.com/hoast/hoast#readme) module.
+> As the name suggest this is a [hoast](https://github.com/hoast/hoast#readme) module.
+> This is module is a little more advanced and is meant to be used for simple task that do not require a whole new module to be made. As a result a little more knowledge about [making modules](https://github.com/hoast/hoast#making) for hoast is recommended.
 
 ## Usage
 
+Install using [npm](https://npmjs.com).
+
+```
+[$ npm install hoast-convert](https://www.npmjs.com/package/hoast-convert)
+```
+
 ### Parameters
 
-* `engine` **{Function}**: function that processes the data and returns the new content. The parameters are the file path, file content, file frontmatter, and global metadata. The frontmatter is only used if the [frontmatter module](https://github.com/hoast/hoast-frontmatter#readme) is used. Do note this function can be an asynchronous.
+* `engine` **{Function}**: function that processes the data and returns the new content. The parameters are the file path, file content, file frontmatter, and global metadata. The frontmatter is only used if the [frontmatter module](https://github.com/hoast/hoast-frontmatter#readme) is used. Do note this function must be asynchronous or return a promise. You can return a string this overwrites the content of the file, or an object with a `path` and `content` property which will overwrite the respective fields of the file data.
 	* Required: `yes`
 * `extension` **{String}**: The new extension name if it needs to change.
 	* Required: `no`
