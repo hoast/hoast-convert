@@ -16,7 +16,7 @@ const validateOptions = function(options) {
 		assert(typeof(options.extension) === 'string', 'hoast-convert: extension must be of type string.');
 	}
 	if (options.patterns) {
-		assert(Array.isArray(options.patterns)  && options.patterns.length, 'hoast-convert: patterns needs must be specified and an array of strings.');
+		assert(Array.isArray(options.patterns)  && options.patterns.length, 'hoast-convert: patterns must be an array of strings.');
 	}
 };
 
@@ -30,50 +30,33 @@ module.exports = function(options) {
 	validateOptions(options);
 	debug(`Validated options.`);
 	options = Object.assign({
-		patterns: [
-			'**'
-		]
+		
 	}, options);
 	
 	return async function(hoast, files) {
 		debug(`Running module.`);
 		await Promise.all(
 			// Loop through files.
-			files.map(function(file) {
-				return new Promise(function(resolve) {
-					debug(`Processing file '${file.path}'.`);
-					
-					assert(file.content !== null, 'hoast-convert: No content found on file, read module needs to be called before this.');
-					// Has to match patterns.
-					if (file.content.type !== 'string' || (options.patterns && options.patterns.length > 0 && !nanomatch.any(file.path, options.patterns))) {
-						debug(`File not valid for processing.`);
-						return resolve();
-					}
-					debug(`File data is valid.`);
-					
-					// Overwrite content with converted content.
-					options.engine(file.path, file.content.data, file.frontmatter, hoast.options.metadata)
-						.then(function(result) {
-							if (typeof(result) === 'string') {
-								file.content.data = result;
-							} else if (typeof(result) === 'object') {
-								if (result.path !== undefined) {
-									file.path = result.path;
-								}
-								if (file.content.data !== undefined) {
-									file.content.data = result.content;
-								}
-							}
-							debug(`File data converted.`);
-							
-							// Replace file extension.
-							if (options.extension) {
-								file.path = file.path.substr(0, file.path.lastIndexOf('.')).concat(options.extension);
-								debug(`Replacing file extension to '${file.path}'.`);
-							}
-							resolve();
-						});
-				})
+			files.map(async function(file) {
+				debug(`Processing file '${file.path}'.`);
+				
+				assert(file.content !== null, 'hoast-convert: No content found on file, read module needs to be called before this.');
+				// Has to match patterns.
+				if (file.content.type !== 'string' || (options.patterns && options.patterns.length > 0 && !nanomatch.any(file.path, options.patterns))) {
+					debug(`File not valid for processing.`);
+					return resolve();
+				}
+				debug(`File data is valid.`);
+				
+				file.content.data = await options.engine(file.path, file.content.data, file.frontmatter, hoast.options.metadata);
+				assert(typeof(file.path) === 'string', 'hoast-rename: file content must be of type string.');
+				debug(`File data converted.`);
+				
+				// Replace file extension.
+				if (options.extension) {
+					file.path = file.path.substr(0, file.path.lastIndexOf('.')).concat(options.extension);
+					debug(`Replacing file extension to '${file.path}'.`);
+				}
 			})
 		);
 	};

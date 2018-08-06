@@ -1,4 +1,5 @@
 # Hoast-convert
+
 Convert the content of files using a specified function.
 
 > As the name suggest this is a [hoast](https://github.com/hoast/hoast#readme) module.
@@ -14,7 +15,7 @@ $ npm install hoast-convert
 
 ### Parameters
 
-* `engine` **{Function}**: function that processes the data and returns the new content. The parameters are the file path, file content, file frontmatter, and global metadata. The frontmatter is only used if the [frontmatter module](https://github.com/hoast/hoast-frontmatter#readme) is used. Do note this function must be asynchronous or return a promise. You can return a string this overwrites the content of the file, or an object with a `path` and `content` property which will overwrite the respective fields of the file data.
+* `engine` **{Function}**: function that processes the data and returns the new content. The parameters are the file path, file content, file frontmatter, and global metadata. The frontmatter is only used if the [frontmatter module](https://github.com/hoast/hoast-frontmatter#readme) is used. Do note the function can be asynchronous or return a promise. The function needs the return the new content in the form of a string.
 	* Required: `yes`
 * `extension` **{String}**: The new extension name if it needs to change.
 	* Required: `no`
@@ -33,25 +34,23 @@ Not compatible with the CLI tool as it requires a reference to a self written fu
 const Hoast = require('hoast');
 const read = Hoast.read,
       convert = require('hoast-convert');
-const CleanCSS = require('clean-css');
-
-const cleanCSS = new CleanCSS();
+const minifyJS = require('uglify-js').minify;
 
 Hoast(__dirname)
   .use(read())
   .use(convert({
     engine: function(path, content, frontmatter, metadata) {
-      return cleanCSS.minify(content);
+      return minifyJS(content);
     },
-    extension: 'min.css',
+    extension: 'min.js',
     patterns: [
-      '**/*.css'
+      '**/*.js'
     ]
   }))
   .process();
 ```
 
-> In the example the CSS files are minified using [CleanCSS](https://github.com/jakubpawlowicz/clean-css#readme) and the `min` is prepended to the extension.
+> In the example the JS files are minified using [uglify-js](https://github.com/mishoo/UglifyJS2#readme) and the `min` is prepended to the extension.
 
 ## License
 
