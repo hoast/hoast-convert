@@ -44,7 +44,7 @@ module.exports = function(options) {
 				// Has to match patterns.
 				if (file.content.type !== 'string' || (options.patterns && options.patterns.length > 0 && !nanomatch.any(file.path, options.patterns))) {
 					debug(`File not valid for processing.`);
-					return resolve();
+					return;
 				}
 				debug(`File data is valid.`);
 				
