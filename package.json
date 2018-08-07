@@ -21,7 +21,7 @@
     "url": "https://github.com/hoast/hoast-convert/issues"
   },
   "peerDependencies": {
-    "hoast": "^0.0.3"
+    "hoast": "^0.0.6"
   },
   "dependencies": {
     "nanomatch": "^1.2.13"
