@@ -1,4 +1,4 @@
-# Hoast-convert
+# hoast-convert
 
 Convert the content of files using a specified function.
 
@@ -19,7 +19,7 @@ $ npm install hoast-convert
 	* Required: `yes`
 * `extension` **{String}**: The new extension name if it needs to change.
 	* Required: `no`
-* `patterns` **{Array of strings}**: An array of string which gets used to match files using glob patterns. See [nanomatch](https://github.com/micromatch/nanomatch#readme) for more details on the patterns.
+* `patterns` **{Array|strings}**: A string or an array of strings which gets used to match files using glob patterns. See [nanomatch](https://github.com/micromatch/nanomatch#readme) for more details on the patterns.
 	* Required: `no`
 
 ### Example

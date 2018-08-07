@@ -16,7 +16,7 @@ const validateOptions = function(options) {
 		assert(typeof(options.extension) === 'string', 'hoast-convert: extension must be of type string.');
 	}
 	if (options.patterns) {
-		assert(Array.isArray(options.patterns)  && options.patterns.length, 'hoast-convert: patterns must be an array of strings.');
+		assert(typeof(options.patterns) === 'string' || (Array.isArray(options.patterns) && options.patterns.length > 0 && typeof(options.patterns[0] === 'string')), 'hoast-convert: patterns must be of type string or an array of strings.');
 	}
 };
 
@@ -42,7 +42,7 @@ module.exports = function(options) {
 				
 				assert(file.content !== null, 'hoast-convert: No content found on file, read module needs to be called before this.');
 				// Has to match patterns.
-				if (file.content.type !== 'string' || (options.patterns && options.patterns.length > 0 && !nanomatch.any(file.path, options.patterns))) {
+				if (file.content.type !== 'string' || (options.patterns && !nanomatch.any(file.path, options.patterns))) {
 					debug(`File not valid for processing.`);
 					return;
 				}
