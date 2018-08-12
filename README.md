@@ -31,10 +31,10 @@ Not compatible with the CLI tool as it requires a reference to a self written fu
 **Script**
 
 ```javascript
-const Hoast = require('hoast');
+const Hoast = require(`hoast`);
 const read = Hoast.read,
-      convert = require('hoast-convert');
-const minifyJS = require('uglify-js').minify;
+      convert = require(`hoast-convert`);
+const minifyJS = require(`uglify-js`).minify;
 
 Hoast(__dirname)
   .use(read())
@@ -42,10 +42,8 @@ Hoast(__dirname)
     engine: function(path, content, frontmatter, metadata) {
       return minifyJS(content);
     },
-    extension: 'min.js',
-    patterns: [
-      '**/*.js'
-    ]
+    extension: `min.js`,
+    patterns: `**/*.js`
   }))
   .process();
 ```
