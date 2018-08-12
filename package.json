@@ -1,7 +1,7 @@
 {
   "author": "Ron Dekker",
   "name": "hoast-convert",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Hoast module used to convert the content of files using a specified function.",
   "license": "ISC",
   "keywords": [
@@ -21,7 +21,7 @@
   },
   "main": "index.js",
   "scripts": {
-		"pretest": "eslint index.js test.js",
+    "pretest": "eslint index.js test.js",
     "test": "ava test.js --verbose"
   },
   "dependencies": {

@@ -3,6 +3,7 @@
 Convert the content of files using a specified function.
 
 > As the name suggest this is a [hoast](https://github.com/hoast/hoast#readme) module.
+
 > This is module is a little more advanced and is meant to be used for simple task that do not require a whole new module to be made. As a result a little more knowledge about [making modules](https://github.com/hoast/hoast#making) for hoast is recommended.
 
 ## Usage
