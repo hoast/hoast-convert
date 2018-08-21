@@ -1,3 +1,21 @@
+<div align="center">
+  <a title="Version master branch" href="https://github.com/hoast/hoast-convert#readme" target="_blank" rel="noopener">
+    <img src="https://img.shields.io/github/package-json/v/hoast/hoast-convert.svg?label=master&style=flat-square"/>
+  </a>
+  <a title="Version npm package" href="https://npmjs.com/package/hoast-convert" target="_blank" rel="noopener">
+    <img src="https://img.shields.io/npm/v/hoast-convert.svg?label=npm&style=flat-square"/>
+  </a>
+  <a title="License agreement" href="https://github.com/hoast/hoast-convert/blob/master/LICENSE" target="_blank" rel="noopener">
+    <img src="https://img.shields.io/github/license/hoast/hoast-convert.svg?style=flat-square"/>
+  </a>
+  <a title="Travis-ci build statis" href="https://travis-ci.org/hoast/hoast-convert" target="_blank" rel="noopener">
+    <img src="https://img.shields.io/travis-ci/hoast/hoast-convert.svg?branch=master&style=flat-square"/>
+  </a>
+  <a title="Open issues on GitHub" href="https://github.com/hoast/hoast-convert/issues" target="_blank" rel="noopener">
+    <img src="https://img.shields.io/github/issues/hoast/hoast-convert.svg?style=flat-square"/>
+  </a>
+</div>
+
 # hoast-convert
 
 Convert the content of files using a specified function.
