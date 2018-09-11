@@ -22,7 +22,7 @@ $ npm install hoast-convert
 
 ### Parameters
 
-* `engine` **{Function}**: function that processes the data and returns the new content. The parameters are the file path, file content, file frontmatter, and global metadata. The frontmatter is only used if the [frontmatter module](https://github.com/hoast/hoast-frontmatter#readme) is used. Do note the function can be asynchronous or return a promise. The function needs the return the new content in the form of a string.
+* `engine` **{Function}**: A function that processes the data and returns the new content. The parameters are the file path, file content, file frontmatter, and global metadata. The frontmatter is only used if the [frontmatter module](https://github.com/hoast/hoast-frontmatter#readme) is used. Do note the function can be asynchronous or return a promise. The function needs the return the new content in the form of a string.
 	* Required: `yes`
 * `extension` **{String}**: The new extension name if it needs to change.
 	* Required: `no`
@@ -33,7 +33,7 @@ $ npm install hoast-convert
 
 **CLI**
 
-Not compatible with the CLI tool as it requires a reference to a self written function.
+Not compatible with the CLI tool as it requires a reference to a self specified function.
 
 **Script**
 
@@ -41,21 +41,21 @@ Not compatible with the CLI tool as it requires a reference to a self written fu
 const Hoast = require(`hoast`);
 const read = Hoast.read,
       convert = require(`hoast-convert`);
-const minifyJS = require(`uglify-js`).minify;
+const minifyHTML = require(`html-minifier`).minify;
 
 Hoast(__dirname)
   .use(read())
   .use(convert({
     engine: function(path, content, frontmatter, metadata) {
-      return minifyJS(content);
+      return minifyHTML(content);
     },
-    extension: `min.js`,
-    patterns: `**/*.js`
+    extension: `min.html`,
+    patterns: `**/*.html`
   }))
   .process();
 ```
 
-> In the example the JS files are minified using [uglify-js](https://github.com/mishoo/UglifyJS2#readme) and the `min` is prepended to the extension.
+> In the example the HTML files are minified using [html-minifier](https://github.com/kangax/html-minifier#readme) and the `min` is prepended to the extension.
 
 ## License
 
