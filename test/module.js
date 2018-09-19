@@ -1,9 +1,9 @@
 // Node modules.
-const { extname } = require(`path`);
-// Dependecy modules.
+const path = require(`path`);
+// Dependency modules.
 const test = require(`ava`);
 // Custom module.
-const Convert = require(`.`);
+const Convert = require(`../library`);
 
 test(`convert`, async function(t) {
 	// Create dummy hoast data.
@@ -36,16 +36,17 @@ test(`convert`, async function(t) {
 	
 	// Create module options.
 	const options = {
-		engine: function(path, content, frontmatter, metadata) {
-			t.is(extname(path), `.md`);
+		engine: function(filePath, content, frontmatter, metadata) {
+			t.is(path.extname(filePath), `.md`);
 			t.is(typeof(content), `string`);
+			t.is(content, `data`);
 			t.is(typeof(frontmatter), `object`);
 			t.is(metadata, hoast.options.metadata);
 			
 			return JSON.stringify(frontmatter);
 		},
 		extension: `.frontmatter`,
-		patterns: `**/*.md`
+		patterns: `*.md`
 	};
 	
 	// Expected outcome.
@@ -68,6 +69,7 @@ test(`convert`, async function(t) {
 	
 	// Test module.
 	const convert = Convert(options);
+	convert.before(hoast);
 	await convert(hoast, files);
 	// Compare files.
 	t.deepEqual(files, filesOutcome);
