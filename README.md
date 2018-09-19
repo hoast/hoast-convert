@@ -1,4 +1,5 @@
 [![Version npm package](https://img.shields.io/npm/v/hoast-convert.svg?label=npm&style=flat-square)](https://npmjs.com/package/hoast-convert)
+[![Version npm package @next](https://img.shields.io/npm/v/hoast-convert/next.svg?label=npm/next&style=flat-square)](https://npmjs.com/package/hoast-convert/v/next)
 [![Version GitHub master branch](https://img.shields.io/github/package-json/v/hoast/hoast-convert.svg?label=github&style=flat-square)](https://github.com/hoast/hoast-convert#readme)
 [![Version GitHub develop branch](https://img.shields.io/github/package-json/v/hoast/hoast-convert/develop.svg?label=github/develop&style=flat-square)](https://github.com/hoast/hoast-convert/tree/develop#readme)
 [![License agreement](https://img.shields.io/github/license/hoast/hoast-convert.svg?style=flat-square)](https://github.com/hoast/hoast-convert/blob/master/LICENSE)
