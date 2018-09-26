@@ -1,10 +1,15 @@
-[![Version npm package](https://img.shields.io/npm/v/hoast-convert.svg?label=npm&style=flat-square)](https://npmjs.com/package/hoast-convert)
-[![Version npm package @next](https://img.shields.io/npm/v/hoast-convert/next.svg?label=npm/next&style=flat-square)](https://npmjs.com/package/hoast-convert/v/next)
-[![Version GitHub master branch](https://img.shields.io/github/package-json/v/hoast/hoast-convert.svg?label=github&style=flat-square)](https://github.com/hoast/hoast-convert#readme)
-[![Version GitHub develop branch](https://img.shields.io/github/package-json/v/hoast/hoast-convert/develop.svg?label=github/develop&style=flat-square)](https://github.com/hoast/hoast-convert/tree/develop#readme)
-[![License agreement](https://img.shields.io/github/license/hoast/hoast-convert.svg?style=flat-square)](https://github.com/hoast/hoast-convert/blob/master/LICENSE)
-[![Travis-ci build status](https://img.shields.io/travis-ci/hoast/hoast-convert.svg?label=travis&branch=master&style=flat-square)](https://travis-ci.org/hoast/hoast-convert)
-[![Open issues on GitHub](https://img.shields.io/github/issues/hoast/hoast-convert.svg?style=flat-square)](https://github.com/hoast/hoast-convert/issues)
+<div align="center">
+  
+  [![npm package @latest](https://img.shields.io/npm/v/hoast-convert.svg?label=npm@latest&style=flat-square&maxAge=3600)](https://npmjs.com/package/hoast-convert)
+  [![npm package @next](https://img.shields.io/npm/v/hoast-convert/next.svg?label=npm@next&style=flat-square&maxAge=3600)](https://npmjs.com/package/hoast-convert/v/next)
+  
+  [![Travis-ci status](https://img.shields.io/travis-ci/hoast/hoast-convert.svg?branch=master&label=test%20status&style=flat-square&maxAge=3600)](https://travis-ci.org/hoast/hoast-convert)
+  [![CodeCov coverage](https://img.shields.io/codecov/c/github/hoast/hoast-convert/master.svg?label=test%20coverage&style=flat-square&maxAge=3600)](https://codecov.io/gh/hoast/hoast-convert)
+  
+  [![License agreement](https://img.shields.io/github/license/hoast/hoast-convert.svg?style=flat-square&maxAge=86400)](https://github.com/hoast/hoast-convert/blob/master/LICENSE)
+  [![Open issues on GitHub](https://img.shields.io/github/issues/hoast/hoast-convert.svg?style=flat-square&maxAge=86400)](https://github.com/hoast/hoast-convert/issues)
+  
+</div>
 
 # hoast-convert
 
