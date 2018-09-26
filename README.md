@@ -66,10 +66,7 @@ Hoast(__dirname)
       return minifyHTML(content);
     },
     extension: `min.html`,
-    patterns: `**/*.html`,
-    patternOptions: {
-      globstar: true
-    }
+    patterns: `*.html`
   }))
   .process();
 ```
