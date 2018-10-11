@@ -69,7 +69,6 @@ test(`convert`, async function(t) {
 	
 	// Test module.
 	const convert = Convert(options);
-	convert.before(hoast);
 	await convert(hoast, files);
 	// Compare files.
 	t.deepEqual(files, filesOutcome);

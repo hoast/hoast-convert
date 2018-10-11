@@ -4,7 +4,7 @@
     "url": "https://rondekker.nl"
   },
   "name": "hoast-convert",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Hoast module used to convert the content of files using a specified function.",
   "license": "ISC",
   "keywords": [

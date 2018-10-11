@@ -124,14 +124,11 @@ module.exports = function(options) {
 		);
 	};
 	
-	mod.before = function() {
-		debug(`Running module before.`);
-		
-		// Parse glob patterns into regular expressions.
-		if (options.patterns) {
-			this.expressions = parse(options.patterns, options.patternOptions, true);
-		}
-	};
+	// Parse glob patterns into regular expressions.
+	if (options.patterns) {
+		mod.expressions = parse(options.patterns, options.patternOptions, true);
+		debug(`Patterns parsed into expressions: ${mod.expressions}.`);
+	}
 	
 	return mod;
 };
