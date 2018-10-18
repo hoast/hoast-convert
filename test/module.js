@@ -1,20 +1,34 @@
 // Node modules.
 const path = require(`path`);
 // Dependency modules.
-const test = require(`ava`);
+const Hoast = require(`hoast`),
+	test = require(`ava`);
 // Custom module.
 const Convert = require(`../library`);
 
-test(`convert`, async function(t) {
-	// Create dummy hoast data.
-	const hoast = {
-		options: {
-			metadata: {
-				title: `convert`
-			}
-		}
-	};
+/**
+ * Emulates a simplified Hoast process for testing purposes.
+ * @param {Object} options Hoast options.
+ * @param {Function} mod Module function.
+ * @param {Array of objects} files The files to process and return.
+ */
+const emulateHoast = async function(options, mod, files) {
+	const hoast = Hoast(__dirname, options);
 	
+	if (mod.before) {
+		await mod.before(hoast);
+	}
+	
+	files = await mod(hoast, files);
+	
+	if (mod.after) {
+		await mod.after(hoast);
+	}
+	
+	return files;
+};
+
+test(`convert`, async function(t) {
 	// Create dummy files.
 	const files = [{
 		path: `a.txt`,
@@ -33,21 +47,6 @@ test(`convert`, async function(t) {
 			content: `frontmatter`
 		}
 	}];
-	
-	// Create module options.
-	const options = {
-		engine: function(filePath, content, frontmatter, metadata) {
-			t.is(path.extname(filePath), `.md`);
-			t.is(typeof(content), `string`);
-			t.is(content, `data`);
-			t.is(typeof(frontmatter), `object`);
-			t.is(metadata, hoast.options.metadata);
-			
-			return JSON.stringify(frontmatter);
-		},
-		extension: `.frontmatter`,
-		patterns: `*.md`
-	};
 	
 	// Expected outcome.
 	const filesOutcome = [{
@@ -68,8 +67,25 @@ test(`convert`, async function(t) {
 	}];
 	
 	// Test module.
-	const convert = Convert(options);
-	await convert(hoast, files);
+	const hoastOptions = {
+		metadata: {
+			title: `convert`
+		}
+	};
+	await emulateHoast(hoastOptions, Convert({
+		engine: function(filePath, content, frontmatter, metadata) {
+			t.is(path.extname(filePath), `.md`);
+			t.is(typeof(content), `string`);
+			t.is(content, `data`);
+			t.is(typeof(frontmatter), `object`);
+			t.is(metadata, hoastOptions.metadata);
+			
+			return JSON.stringify(frontmatter);
+		},
+		extension: `.frontmatter`,
+		patterns: `*.md`
+	}), files);
+	
 	// Compare files.
 	t.deepEqual(files, filesOutcome);
 });
