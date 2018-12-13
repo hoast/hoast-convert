@@ -72,7 +72,3 @@ Hoast(__dirname)
 ```
 
 > In the example the HTML files are minified using [html-minifier](https://github.com/kangax/html-minifier#readme) and `min` is prepended to the extension.
-
-## License
-
-[ISC license](https://github.com/hoast/hoast-convert/blob/master/LICENSE)
