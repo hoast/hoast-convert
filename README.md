@@ -1,10 +1,10 @@
 <div align="center">
   
-  [![npm package @latest](https://img.shields.io/npm/v/hoast-convert.svg?label=npm@latest&style=flat-square&maxAge=3600)](https://npmjs.com/package/hoast-convert)
-  [![npm package @next](https://img.shields.io/npm/v/hoast-convert/next.svg?label=npm@next&style=flat-square&maxAge=3600)](https://npmjs.com/package/hoast-convert/v/next)
+  [![npm package version @latest](https://img.shields.io/npm/v/hoast-convert.svg?label=npm@latest&style=flat-square&maxAge=3600)](https://npmjs.com/package/hoast-convert)
+  [![npm package version @next](https://img.shields.io/npm/v/hoast-convert/next.svg?label=npm@next&style=flat-square&maxAge=3600)](https://npmjs.com/package/hoast-convert/v/next)
   
-  [![Travis-ci status](https://img.shields.io/travis-ci/hoast/hoast-convert.svg?branch=master&label=test%20status&style=flat-square&maxAge=3600)](https://travis-ci.org/hoast/hoast-convert)
-  [![CodeCov coverage](https://img.shields.io/codecov/c/github/hoast/hoast-convert/master.svg?label=test%20coverage&style=flat-square&maxAge=3600)](https://codecov.io/gh/hoast/hoast-convert)
+  [![Travis-ci test status](https://img.shields.io/travis-ci/hoast/hoast-convert.svg?branch=master&label=test%20status&style=flat-square&maxAge=3600)](https://travis-ci.org/hoast/hoast-convert)
+  [![CodeCov test coverage](https://img.shields.io/codecov/c/github/hoast/hoast-convert/master.svg?label=test%20coverage&style=flat-square&maxAge=3600)](https://codecov.io/gh/hoast/hoast-convert)
   
   [![License agreement](https://img.shields.io/github/license/hoast/hoast-convert.svg?style=flat-square&maxAge=86400)](https://github.com/hoast/hoast-convert/blob/master/LICENSE)
   [![Open issues on GitHub](https://img.shields.io/github/issues/hoast/hoast-convert.svg?style=flat-square&maxAge=86400)](https://github.com/hoast/hoast-convert/issues)
@@ -17,7 +17,7 @@ Convert the content of files using a specified function.
 
 > As the name suggest this is a [hoast](https://github.com/hoast/hoast#readme) module.
 
-> This is module is a little more advanced and is meant to be used for simple task that do not require a whole new module to be made. As a result a little more knowledge about [making modules](https://github.com/hoast/hoast#making) for hoast is recommended.
+> This module is meant to be used for simple task that do not require a whole new module to be made. As a result a little more knowledge on [how to making modules](https://github.com/hoast/hoast#making) is recommended.
 
 ## Usage
 
@@ -29,12 +29,9 @@ $ npm install hoast-convert
 
 ### Parameters
 
-* `engine`: A function that processes the data and returns the new content. The parameters are the file path, file content, file frontmatter, and global metadata. The frontmatter is only used if the [frontmatter module](https://github.com/hoast/hoast-frontmatter#readme) is used. Do note the function can be asynchronous or return a promise. The function needs the return the new content in the form of a string.
+* `engine`: The file processing function which gets given two parameters, the file data and the hoast metadata. The return can be an object, which gets merged with the pre-existing file, or an array of objects, whereby each item in the array becomes a new file and gets merged with the pre-existing file.
   * Type: `Function`
 	* Required: `yes`
-* `extension`: The new extension name if it needs to change.
-  * Type: `String`
-	* Required: `no` 
 * `patterns`: Glob patterns to match file paths with. If the engine function is set it will only give the function any files matching the pattern.
   * Type: `String` or `Array of strings`
 	* Required: `no`
@@ -62,13 +59,66 @@ const minifyHTML = require(`html-minifier`).minify;
 Hoast(__dirname)
   .use(read())
   .use(convert({
-    engine: function(path, content, frontmatter, metadata) {
-      return minifyHTML(content);
+    engine: function(file, metadata) {
+      return {
+        content: {
+          data: minifyHTML(file.content.data)
+        }
+      };
     },
-    extension: `min.html`,
     patterns: `*.html`
   }))
   .process();
 ```
 
-> In the example the HTML files are minified using [html-minifier](https://github.com/kangax/html-minifier#readme) and `min` is prepended to the extension.
+> In the example above the HTML files are minified using [html-minifier](https://github.com/kangax/html-minifier#readme).
+
+```javascript
+const Hoast = require(`hoast`);
+const read = Hoast.read,
+      convert = require(`hoast-convert`);
+const babel = require(`@babel/core`);
+
+Hoast(__dirname)
+  .use(read())
+  .use(convert({
+    engine: async function(file, metadata) {
+      const result = await babel.transformAsync(file.content.data, { code: true, map: true });
+      return [{
+        content: {
+          data: result.code
+        }
+      }, {
+        path: file.path.substring(0, file.lastIndexOf(`.`)).concat(`.map.js`);
+        content: {
+          data: result.map
+        }
+      }];
+    },
+    patterns: `*.js`
+  }))
+  .process();
+```
+
+> In the example above the JavaScript files are transformed using [Babel](https://github.com/babel/babel#readme), and an additional `.map.js` file is created. Do note Babel requires more setup than is shown in the example.
+
+```javascript
+const Hoast = require(`hoast`);
+const read = Hoast.read,
+      convert = require(`hoast-convert`);
+
+Hoast(__dirname, {
+  metadata: {
+    hello: `World!`
+  }
+})
+  .use(read())
+  .use(convert({
+    engine: function(file, metadata) {
+      console.log(JSON.Stringify(metadata));
+    }
+  }))
+  .process();
+```
+
+> In the example above the metadata will be printed to the console as `{ hello: "World!" }`.
